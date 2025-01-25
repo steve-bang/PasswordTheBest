@@ -24,11 +24,11 @@ To validate a password, use the CPasswordValidation class:
 using PasswordTheBest.Validations;
 
 CPasswordValidation cPasswordValidation = CPasswordValidation.Create(password, new CProperties
-    {
-        Minimum = 6,
-        IsAtLeastOneDigit = true,
-        IsAtLeastOneSpecialCharacter = true
-    });
+{
+    Minimum = 6,
+    IsAtLeastOneDigit = true,
+    IsAtLeastOneSpecialCharacter = true
+});
 
     bool resultActual = cPasswordValidation.ValidPassword();
 ```
@@ -38,12 +38,11 @@ Simple for implement:
 ``` CSharp
 using PasswordTheBest;
 
-    var password = "password";
+var password = "password";
 
+var passwordHasher = PasswordTheBestFactory.Create(HashAlgorithmName.SHA256);
 
-    var passwordHasher = PasswordTheBestFactory.Create(HashAlgorithmName.SHA256);
-
-    var hash = passwordHasher.Hash(password, out string salt);
+var hash = passwordHasher.Hash(password, out string salt);
 ```
 
 ### Contributing
