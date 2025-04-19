@@ -15,6 +15,33 @@ namespace PasswordTheBest.Validations
         public bool IsAtLeastOneSpecialCharacter { get; set; }
 
         /// <summary>
+        /// Creates a CProperties instance by analyzing a regex pattern
+        /// </summary>
+        /// <param name="regexPattern">The regex pattern to analyze</param>
+        /// <returns>A configured CProperties instance</returns>
+        public static CProperties FromRegexPattern(string regexPattern)
+        {
+            var properties = new CProperties();
+
+            // Check for minimum length (look for {X,} or {X,Y} pattern)
+            var minLengthMatch = System.Text.RegularExpressions.Regex.Match(regexPattern, @"{(\d+),");
+            if (minLengthMatch.Success && int.TryParse(minLengthMatch.Groups[1].Value, out int minLength))
+            {
+                properties.Minimum = minLength;
+            }
+
+            // Check for different character requirements
+            properties.IsAtLeastOneUpperCase = regexPattern.Contains(@"(?=.*[A-Z])");
+            properties.IsAtLeastLowerUpperCase = regexPattern.Contains(@"(?=.*[a-z])") && 
+                                               regexPattern.Contains(@"(?=.*[A-Z])");
+            properties.IsAtLeastOneDigit = regexPattern.Contains(@"(?=.*\d)");
+            properties.IsAtLeastOneSpecialCharacter = regexPattern.Contains(@"(?=.*[\W_])") ||
+                                                     regexPattern.Contains(@"(?=.*[!@#$%^&*])");
+
+            return properties;
+        }
+
+        /// <summary>
         /// Method to dynamically build a regex pattern based on the properties
         /// </summary>
         /// <returns></returns>

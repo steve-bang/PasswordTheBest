@@ -3,7 +3,7 @@ using System.Security.Cryptography;
 
 namespace PasswordTheBest;
 
-public class PasswordHash256Salt : PasswordHasherAbstract
+public class PasswordHashSHA256Salt : PasswordHasherAbstract
 {
     private readonly int HashSize = 64;
 
@@ -11,12 +11,12 @@ public class PasswordHash256Salt : PasswordHasherAbstract
 
     private readonly int Iterations = 350000;
 
-    public PasswordHash256Salt()
+    public PasswordHashSHA256Salt()
     {
         Algorithms = HashAlgorithmName.SHA256;
     }
 
-    public PasswordHash256Salt(
+    public PasswordHashSHA256Salt(
         int hashSize,
         int saltSize,
         int iterations
